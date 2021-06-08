@@ -1,5 +1,5 @@
 class Api::StatesController < ApplicationController
-  def show
+  def index
     @data = []
 
     CSV.foreach(Rails.root.join('lib/state_data.csv'), headers: true, converters: :all) do |row|

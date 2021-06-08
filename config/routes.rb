@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
   namespace :api do
-    get "/states" => "states#show"
+    get "/states" => "states#index"
   end
 end
