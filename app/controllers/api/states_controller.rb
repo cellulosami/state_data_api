@@ -7,15 +7,13 @@ class Api::StatesController < ApplicationController
       @data << row.to_hash
     end
 
-    @data = @data.to_json
-
     render json: @data
   end
 
   #/api/states/:abbr
   def show
-    state = false
     #convert abbr to state name
+    state = nil
     CSV.foreach(Rails.root.join('lib/abbreviations.csv'), headers: true, converters: :all) do |row|
       hash = row.to_hash
       if hash["Code"] == params[:abbr]
@@ -24,8 +22,8 @@ class Api::StatesController < ApplicationController
       end
     end
 
-    data = false
     #convert state name to state data
+    data = nil
     CSV.foreach(Rails.root.join('lib/state_data.csv'), headers: true, converters: :all) do |row|
       hash = row.to_hash
       if hash["state"] == state
