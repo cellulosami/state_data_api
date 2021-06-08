@@ -24,6 +24,16 @@ class Api::StatesController < ApplicationController
       end
     end
 
-    render json: state
+    data = false
+    #convert state name to state data
+    CSV.foreach(Rails.root.join('lib/state_data.csv'), headers: true, converters: :all) do |row|
+      hash = row.to_hash
+      if hash["state"] == state
+        data = hash
+        break
+      end
+    end
+
+    render json: data
   end
 end
