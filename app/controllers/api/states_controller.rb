@@ -10,4 +10,10 @@ class Api::StatesController < ApplicationController
 
     render json: @data
   end
+
+  def show
+    data = [params[:abbr]]
+
+    render json: data
+  end
 end
