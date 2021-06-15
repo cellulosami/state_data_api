@@ -34,4 +34,29 @@ class Api::StatesController < ApplicationController
 
     render json: data
   end
+
+  def frontend_index
+    #convert abbrs to state names
+    @abbreviations = {}
+
+    CSV.foreach(Rails.root.join('lib/abbreviations.csv'), headers: true, converters: :all) do |row|
+      hash = row.to_hash
+      p hash
+      p hash["State"]
+      p hash["Code"]
+      @abbreviations[hash["Code"]] = hash["State"]
+    end
+
+    #convert state name to state data
+    # data = nil
+    # CSV.foreach(Rails.root.join('lib/state_data.csv'), headers: true, converters: :all) do |row|
+    #   hash = row.to_hash
+    #   if hash["state"] == state
+    #     data = hash
+    #     break
+    #   end
+    # end
+
+    render json: @abbreviations
+  end
 end
